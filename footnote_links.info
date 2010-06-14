@@ -1,0 +1,5 @@
+name = Footnote Links
+description = Footnote links provides an input filter whichs takes inline links and converts them into footnotes.
+core = 6.x
+version = 6.x-0.1
+package = Input filters

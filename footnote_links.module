@@ -1,0 +1,46 @@
+<?php 
+
+/**
+ * Implementation of hook_filter().
+ */
+function footnote_links_filter($op, $delta = 0, $format = -1, $text = '', $cache_id  = 0) {
+  switch($op) {
+    case 'list':
+      return array(t('Footnote Links'));
+    case 'description':
+      return t('Will take inline links in content and transform them into footnotes.');
+    case 'process':
+      return footnote_links_process($text, $format);
+    default:
+      return $text;
+  }
+}
+
+
+/**
+ * Process a piece of text to convert inline links into footnotes.
+ */
+function footnote_links_process($text, $format) {
+  module_load_include('php', 'footnote_links', 'simple_html_dom');
+  $html = str_get_html($text);
+
+  $count = 1;
+  $item_list = array();
+  foreach ($html->find('a') as $key => $element) {
+    $id = 'footnotes-' . $count;
+    $source_id = 'origin-link-' . $count;
+    
+    // Add link to the footnotes
+    $element->id = $id;
+    $item_list[] = $element->outertext . "<sup><a href=\"#$source_id\" class=\"to-origin\">^</a></sup>" ;
+    
+    // Convert link to a superscript link pointing to the footnote
+    $html->find('a', $key)->outertext = $element->innertext . "<sup>[<a href=\"#$id\" id=\"$source_id\" class=\"to-footnote\">$count</a>]</sup>";
+    
+    
+    $count++;
+  }
+  
+  
+  return (string)$html . theme('item_list', $item_list, t('References'), 'ol');
+}
