@@ -1,0 +1,5 @@
+This module is made available under the terms of the GNU GPLv2.
+For the full text of the license see http://www.gnu.org/licenses/gpl-2.0.html
+
+This project also uses the PHP Simple HTML DOM Parser (http://simplehtmldom.sourceforge.net/) 
+which is made available under the MIT license.

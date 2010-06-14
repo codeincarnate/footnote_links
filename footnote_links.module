@@ -1,6 +1,12 @@
 <?php 
 
 /**
+ * This module is made available under the GNU GPLv2.
+ * 
+ * See LICENSE.txt for a link to the full license.
+ */
+
+/**
  * Implementation of hook_filter().
  */
 function footnote_links_filter($op, $delta = 0, $format = -1, $text = '', $cache_id  = 0) {
